@@ -61,6 +61,15 @@ namespace FileSystemAccess.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access denied.
+        /// </summary>
+        public static string AccessDeniedErrorMessage {
+            get {
+                return ResourceManager.GetString("AccessDeniedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can&apos;t delete root folder.
         /// </summary>
         public static string DeleteRootFolderErrorMessage {

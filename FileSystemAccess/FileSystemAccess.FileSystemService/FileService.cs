@@ -13,6 +13,8 @@ namespace FileSystemAccess.FileSystemService
         /// </summary>
         /// <param name="path">System path</param>
         /// <returns><see cref="FileSystemItemModelBase"/>file info model</returns>
+        /// <exception cref="ArgumentException">if <see cref="path"/> is empty</exception>
+        /// <exception cref="PathNotExistsException">if <see cref="path"/> not exists</exception>
         public FileSystemItemModelBase GetFileOrFolder(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
@@ -37,6 +39,9 @@ namespace FileSystemAccess.FileSystemService
         /// Delete file/folder
         /// </summary>
         /// <param name="path">System path</param>
+        /// <exception cref="ArgumentException">if <see cref="path"/> is empty</exception>
+        /// <exception cref="PathNotExistsException">if <see cref="path"/> not exists or already deleted</exception>
+        /// <exception cref="UnauthorizedAccessException"> if access denied</exception>
         public void DeleteFileOrFolder(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
@@ -58,7 +63,7 @@ namespace FileSystemAccess.FileSystemService
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    throw;
+                    throw new PathNotExistsException("No file or folder with specified path");
                 }
             }
 
@@ -68,7 +73,7 @@ namespace FileSystemAccess.FileSystemService
             }
             catch (FileNotFoundException)
             {
-                throw;
+                throw new PathNotExistsException("No file or folder with specified path");
             }
         }
 
@@ -77,6 +82,10 @@ namespace FileSystemAccess.FileSystemService
         /// </summary>
         /// <param name="folderPath">Folder path where a new file should be created</param>
         /// <param name="fileSystemItem"><see cref="CreateOrUpdateFileModel"/> - file info</param>
+        /// <exception cref="ArgumentException">if <see cref="fileSystemItem"/> is empty</exception>
+        /// <exception cref="PathNotExistsException">if <see cref="fileSystemItem"/> not exists or already deleted</exception>
+        /// <exception cref="FileAlreadyExistsException">if file already exists</exception>
+        /// <exception cref="UnauthorizedAccessException"> if access denied</exception>
         public void CreateFile(string folderPath, CreateOrUpdateFileModel fileSystemItem)
         {
             if (string.IsNullOrWhiteSpace(folderPath))
@@ -104,6 +113,7 @@ namespace FileSystemAccess.FileSystemService
             }
             catch (Exception ex)
             {
+                //TODO: rethrow with more info
                 throw;
             }
         }
@@ -114,6 +124,9 @@ namespace FileSystemAccess.FileSystemService
         /// <param name="folderPath">Folder path where a new file should be created/updated</param>
         /// <param name="fileSystemItem"><see cref="CreateOrUpdateFileModel"/> - file info</param>
         /// <param name="isCreated">Determines whether a file is created, or updated</param>
+        /// <exception cref="ArgumentException">if <see cref="folderPath"/> is empty or <see cref="fileSystemItem"/> is null</exception>
+        /// <exception cref="FileAlreadyExistsException">if file already exists</exception>
+        /// <exception cref="UnauthorizedAccessException"> if access denied</exception>
         public void UpdateOrCreateFile(string folderPath, CreateOrUpdateFileModel fileSystemItem, out bool isCreated)
         {
             if (string.IsNullOrWhiteSpace(folderPath))
@@ -132,6 +145,7 @@ namespace FileSystemAccess.FileSystemService
             }
             catch (Exception ex)
             {
+                //TODO: rethrow with more info
                 throw;
             }
         }

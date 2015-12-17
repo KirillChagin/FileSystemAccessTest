@@ -155,6 +155,7 @@ namespace FileSystemAccess.FileSystemService
             }
             catch (Exception ex)
             {
+                //TODO: rethrow with more info and continue stack
                 throw;
             }
         }

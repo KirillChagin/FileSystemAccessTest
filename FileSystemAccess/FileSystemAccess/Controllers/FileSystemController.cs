@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AutoMapper;
+using FileSystemAccess.ActionFilters;
 using FileSystemAccess.Domain.Exceptions;
 using FileSystemAccess.Domain.Models;
 using FileSystemAccess.FileSystemServiceContract;
@@ -59,6 +60,14 @@ namespace FileSystemAccess.Controllers
             {
                 return BadRequest(ErrorMessages.InvalidFilePathFormatErrorMessage);
             }
+            catch (UnauthorizedAccessException e)
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    Content = new StringContent(ErrorMessages.AccessDeniedErrorMessage)
+                };
+                throw new HttpResponseException(response);
+            }
         }
 
         // DELETE api/FileSystem
@@ -68,6 +77,7 @@ namespace FileSystemAccess.Controllers
         /// </summary>
         /// <param name="path">File or folder path</param>
         /// <returns></returns>
+        [ExclusiveAction]
         public HttpResponseMessage Delete(string path)
         {
             if (String.IsNullOrWhiteSpace(path))
@@ -113,6 +123,14 @@ namespace FileSystemAccess.Controllers
                 };
                 throw new HttpResponseException(response);
             }
+            catch (UnauthorizedAccessException e)
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    Content = new StringContent(ErrorMessages.AccessDeniedErrorMessage)
+                };
+                throw new HttpResponseException(response);
+            }
             catch (Exception)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
@@ -129,6 +147,7 @@ namespace FileSystemAccess.Controllers
         /// <param name="path">Folder path where file should be created</param>
         /// <param name="fileInfo"></param>
         /// <returns></returns>
+        [ExclusiveAction]
         public HttpResponseMessage Post(string path, [FromBody]CreateOrUpdateFileViewModel fileInfo)
         {
             if (fileInfo == null)
@@ -182,6 +201,14 @@ namespace FileSystemAccess.Controllers
                 };
                 throw new HttpResponseException(response);
             }
+            catch (UnauthorizedAccessException e)
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    Content = new StringContent(ErrorMessages.AccessDeniedErrorMessage)
+                };
+                throw new HttpResponseException(response);
+            }
             catch (Exception e)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
@@ -199,6 +226,7 @@ namespace FileSystemAccess.Controllers
         /// <param name="fileInfo">file name and content in JSON format</param>
         /// <returns></returns>
         [HttpPut]
+        [ExclusiveAction]
         public HttpResponseMessage Put(string path, [FromBody]CreateOrUpdateFileViewModel fileInfo)
         {
             if (fileInfo == null || string.IsNullOrWhiteSpace(fileInfo.Name))
@@ -239,6 +267,14 @@ namespace FileSystemAccess.Controllers
             catch (ArgumentException)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+                throw new HttpResponseException(response);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    Content = new StringContent(ErrorMessages.AccessDeniedErrorMessage)
+                };
                 throw new HttpResponseException(response);
             }
             catch (Exception e)
