@@ -25,7 +25,7 @@ Deploy - стандартными средствами Visual Studion
 
 Доп. задания:
 Put и Post: URL - путь до дирректории где лежит/будет лежать файл.
-(Напр. http://localhost/FileSystemAccess/api/FileSystem/Files/test.txt)
+(Напр. http://localhost/FileSystemAccess/api/FileSystem/Files)
 
 Body:
 
