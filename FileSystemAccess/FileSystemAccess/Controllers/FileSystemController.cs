@@ -13,6 +13,9 @@ using FileSystemAccess.Resources;
 
 namespace FileSystemAccess.Controllers
 {
+    /// <summary>
+    /// Controller for working with files
+    /// </summary>
     [Authorize]
     public class FileSystemController : ApiController
     {
@@ -20,6 +23,10 @@ namespace FileSystemAccess.Controllers
 
         private string _rootFolderPath;
 
+        /// <summary>
+        /// Constructor for controller
+        /// </summary>
+        /// <param name="service"></param>
         public FileSystemController(IFileService service)
         {
             _fileService = service;
@@ -32,7 +39,8 @@ namespace FileSystemAccess.Controllers
         /// API method for getting file or folder info
         /// </summary>
         /// <param name="path">File or folder path</param>
-        /// <returns></returns>
+        /// <example>GET api/FileSystem/Files/test.txt</example>
+        /// <returns>Json with file/folder information</returns>
         public IHttpActionResult Get(string path)
         {
             var fullPath = _rootFolderPath;
@@ -76,6 +84,7 @@ namespace FileSystemAccess.Controllers
         /// API method for deleting file or folder info
         /// </summary>
         /// <param name="path">File or folder path</param>
+        /// <example>DELETE api/FileSystem/Files/test.txt</example>
         /// <returns></returns>
         [ExclusiveAction]
         public HttpResponseMessage Delete(string path)
@@ -146,6 +155,13 @@ namespace FileSystemAccess.Controllers
         /// </summary>
         /// <param name="path">Folder path where file should be created</param>
         /// <param name="fileInfo"></param>
+        /// <example>POST api/FileSystem/Files
+        /// Request Body:
+        /// {
+        ///   "name": "test1.txt",
+        ///   "content": "YXNkZg=="
+        /// }
+        /// </example>
         /// <returns></returns>
         [ExclusiveAction]
         public HttpResponseMessage Post(string path, [FromBody]CreateOrUpdateFileViewModel fileInfo)
@@ -220,10 +236,17 @@ namespace FileSystemAccess.Controllers
         }
 
         /// <summary>
-        /// API method for updateing file. If file not exists, it will be created
+        /// API method for updating file. If file not exists, it will be created
         /// </summary>
         /// <param name="path">File location from base URI</param>
         /// <param name="fileInfo">file name and content in JSON format</param>
+        /// <example>POST api/FileSystem/Files
+        /// Request Body:
+        /// {
+        ///   "name": "test1.txt",
+        ///   "content": "YXNkZg=="
+        /// }
+        /// </example>
         /// <returns></returns>
         [HttpPut]
         [ExclusiveAction]
