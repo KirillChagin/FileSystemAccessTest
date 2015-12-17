@@ -1,0 +1,14 @@
+/FileSystemAccess/artifacts
+/FileSystemAccess/FileSystemAccess/bin
+/FileSystemAccess/FileSystemAccess/obj
+/FileSystemAccess/FileSystemAccess.Bootstrapper/bin
+/FileSystemAccess/FileSystemAccess.Bootstrapper/obj
+/FileSystemAccess/FileSystemAccess.Domain/obj
+/FileSystemAccess/FileSystemAccess.Domain/bin
+/FileSystemAccess/FileSystemAccess.FileSystemService/obj
+/FileSystemAccess/FileSystemAccess.FileSystemService/bin
+/FileSystemAccess/FileSystemAccess.FileSystemServiceContract/bin
+/FileSystemAccess/FileSystemAccess.FileSystemServiceContract/obj
+/FileSystemAccess/packages
+/FileSystemAccess/FileSystemAccess/*.user
+/FileSystemAccess/.vs/FileSystemAccess/v14/*.suo
